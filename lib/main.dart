@@ -7,12 +7,15 @@ void main() => runApp(const MyApp());
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  static const title = 'Local Auth Demo';
+
   @override
   Widget build(BuildContext context) => MaterialApp(
-        title: 'Feedback Package Demo',
+        title: title,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomePage(title: 'Feedback Package Demo'),
+        home: const HomePage(title: title),
       );
 }
