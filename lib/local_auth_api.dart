@@ -39,11 +39,12 @@ class LocalAuthApi {
     if (!isAvailable) return false;
     try {
       return await auth.authenticate(
-        localizedReason: '',
+        localizedReason: 'Scan fingerprint to authenticate',
         authMessages: const [
           AndroidAuthMessages(
             signInTitle: 'Scan fingerprint to authenticate',
             cancelButton: 'No thanks',
+            biometricSuccess: 'Success'
           ),
           IOSAuthMessages(
             localizedFallbackTitle: 'Scan fingerprint to authenticate',
