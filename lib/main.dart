@@ -14,16 +14,23 @@ class MyApp extends StatelessWidget {
         title: title,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
           textTheme: const TextTheme(
-            bodyMedium: TextStyle(fontSize: 30),
+            bodyMedium: TextStyle(fontSize: 20),
           ),
-          appBarTheme: const AppBarTheme(
-            titleTextStyle: TextStyle(fontSize: 30),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            titleTextStyle: const TextStyle(
+                fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 30),
+              textStyle: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
+              minimumSize: const Size(300, 70),
             ),
           ),
         ),

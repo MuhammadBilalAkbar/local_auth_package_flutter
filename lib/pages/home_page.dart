@@ -4,6 +4,8 @@ import 'package:local_auth_package_flutter/local_auth_api.dart';
 
 import 'authenticated_page.dart';
 
+final auth = LocalAuthentication();
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
@@ -14,9 +16,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isDeviceSupported = false;
+  bool canCheckBiometrics = false;
+  List<BiometricType> availableBiometrics = [];
+
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
+        appBar: AppBar(
+          title: Text(widget.title),
+          // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -25,10 +34,25 @@ class _HomePageState extends State<HomePage> {
                 icon: const Icon(Icons.event_available),
                 onPressed: () async {
                   final isAvailable = await LocalAuthApi.isDeviceSupported();
+                  final canCheckBiometric =
+                      await LocalAuthApi.canCheckBiometrics();
+                  setState(() {
+                    isDeviceSupported = isAvailable;
+                    canCheckBiometrics = canCheckBiometric;
+                  });
                   final biometrics = await LocalAuthApi().getBiometrics();
+                  debugPrint('biometrics: $biometrics');
+                  final hasStrong = biometrics.contains(BiometricType.strong);
+                  debugPrint('hasStrong: $hasStrong');
+                  final hasWeak = biometrics.contains(BiometricType.weak);
+                  debugPrint('hasWeak: $hasWeak');
+                  final hasFace = biometrics.contains(BiometricType.face);
+                  debugPrint('hasFace: $hasFace');
                   final hasFingerprint =
                       biometrics.contains(BiometricType.fingerprint);
-                  final hasFaceId = biometrics.contains(BiometricType.face);
+                  debugPrint('hasFingerprint: $hasFingerprint');
+                  final hasIris = biometrics.contains(BiometricType.iris);
+                  debugPrint('hasIris: $hasIris');
 
                   if (!mounted) return;
                   showDialog(
@@ -40,8 +64,8 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           listTile('Biometrics', isAvailable),
-                          listTile('Fingerprint', hasFingerprint),
-                          listTile('FaceId', hasFaceId),
+                          listTile('Strong', hasStrong),
+                          listTile('Weak', hasWeak),
                         ],
                       ),
                     ),
@@ -49,6 +73,10 @@ class _HomePageState extends State<HomePage> {
                 },
                 label: const Text('Check Availability'),
               ),
+              const SizedBox(height: 24),
+              Text('isDeviceSupported: $isDeviceSupported'),
+              const SizedBox(height: 12),
+              Text('canCheckBiometrics: $canCheckBiometrics'),
               const SizedBox(height: 24),
               ElevatedButton.icon(
                 icon: const Icon(Icons.lock_open),

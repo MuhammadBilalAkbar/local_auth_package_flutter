@@ -65,6 +65,7 @@
 
 - It allows local authentication for Android and iOS devices via fingerprint, touch ID, face ID,
   passcode, pin, or pattern.
+- Find more features at [pub.dev](https://pub.dev/packages/local_auth).
 
 **Problems from Videos**
 
@@ -73,8 +74,7 @@
   <br/> Answer: By default the library should be able to detect both face and fingerprint but I
   guess its prioritizing fingerprint.
 - Question: Can I use this for, let's say, digitally sign documents?
-  <br/> Answer: You could learn more about security of Local Auth here. Right now, I'm not planning
-  to create more videos on Local Auth Fingerprint.
+  <br/> Answer: You could learn more about security of Local Auth here:
 
 1. Security of Local Auth Tutorial & When Not to use
    it: [http://www.youtube.com/watch?v=4-P_Su9O5NM&t=9m26s](http://www.youtube.com/watch?v=4-P_Su9O5NM&t=9m26s)
@@ -99,7 +99,7 @@
 2. Main points
     - Check availability of all types fo authentications
     - Authenticate using available authentication methods
-3. Its very useful for security, convenience, customizability and ease of use. 
+3. Its very useful for security, convenience, customizability and ease of use.
 
 **The Structured Main Content**
 
