@@ -107,8 +107,13 @@
 1. In this video, you will learn how to authenticated android and iOS devices via fingerprint, touch
    ID, face ID, passcode, pin, or pattern.
 2. Main points
-    - Check availability of all types fo authentications
+    - Check availability of all types of authentications
     - Authenticate using available authentication methods
+    - Keep in mind that many android and iOS devices support only face id and some support
+      fingerprint. For android visit [this](https://pub.dev/packages/local_auth#compatibility) and
+      for iOS
+      visit [this](https://en.wikipedia.org/wiki/Touch_ID#:~:text=Apple%20retained%20Touch%20ID%20on,have%20adopted%20Face%20ID%20recognition.)
+      .
 3. Its very useful for security, convenience, customizability and ease of use.
 
 **The Structured Main Content**
