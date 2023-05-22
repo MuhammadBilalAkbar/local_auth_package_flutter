@@ -65,6 +65,7 @@
 
 - It allows local authentication for Android and iOS devices via fingerprint, touch ID, face ID,
   passcode, pin, or pattern.
+- Find more features at [pub.dev](https://pub.dev/packages/local_auth).
 
 **Problems from Videos**
 
@@ -73,8 +74,7 @@
   <br/> Answer: By default the library should be able to detect both face and fingerprint but I
   guess its prioritizing fingerprint.
 - Question: Can I use this for, let's say, digitally sign documents?
-  <br/> Answer: You could learn more about security of Local Auth here. Right now, I'm not planning
-  to create more videos on Local Auth Fingerprint.
+  <br/> Answer: You could learn more about security of Local Auth here:
 
 1. Security of Local Auth Tutorial & When Not to use
    it: [http://www.youtube.com/watch?v=4-P_Su9O5NM&t=9m26s](http://www.youtube.com/watch?v=4-P_Su9O5NM&t=9m26s)
@@ -89,6 +89,16 @@
 **Problems from Flutter Stackoverflow**
 
 - https://stackoverflow.com/questions/67546548/encryption-in-java-and-decryption-in-flutter-aes-256
+- https://stackoverflow.com/questions/67722252/unable-to-authenticate-using-flutter-local-auth-plugin
+- https://stackoverflow.com/questions/73713418/is-it-not-valid-now-the-authenticatewithbiometrics-in-local-auth-plugin
+- https://stackoverflow.com/questions/67121556/flutter-local-auth-required-security-features-not-enabled
+- https://stackoverflow.com/questions/68220888/i-flutter-805-platformexceptionno-fragment-activity-local-auth-plugin-requ
+- https://stackoverflow.com/questions/74282427/local-auth-useerrordialogs-is-not-working-for-second-time
+- https://stackoverflow.com/questions/62210423/flutter-local-auth-doesnt-work-on-android-28
+- https://stackoverflow.com/questions/66499220/local-authentication-problem-in-release-apk-flutter
+- https://stackoverflow.com/questions/59441558/flutter-local-auth-0-6-1-platformexceptionerror-you-need-to-use-a-theme
+- https://stackoverflow.com/questions/64045554/flutter-local-auth-issues-on-android-certain-devices
+- https://stackoverflow.com/questions/69970290/flutter-local-auth-can-be-bypassed-by-pressing-the-back-button
 
 ## 3. Video Structure
 
@@ -97,9 +107,14 @@
 1. In this video, you will learn how to authenticated android and iOS devices via fingerprint, touch
    ID, face ID, passcode, pin, or pattern.
 2. Main points
-    - Check availability of all types fo authentications
+    - Check availability of all types of authentications
     - Authenticate using available authentication methods
-3. Its very useful for security, convenience, customizability and ease of use. 
+    - Keep in mind that many android and iOS devices support only face id and some support
+      fingerprint. For android visit [this](https://pub.dev/packages/local_auth#compatibility) and
+      for iOS
+      visit [this](https://en.wikipedia.org/wiki/Touch_ID#:~:text=Apple%20retained%20Touch%20ID%20on,have%20adopted%20Face%20ID%20recognition.)
+      .
+3. Its very useful for security, convenience, customizability and ease of use.
 
 **The Structured Main Content**
 
