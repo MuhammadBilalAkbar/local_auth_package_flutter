@@ -89,6 +89,16 @@
 **Problems from Flutter Stackoverflow**
 
 - https://stackoverflow.com/questions/67546548/encryption-in-java-and-decryption-in-flutter-aes-256
+- https://stackoverflow.com/questions/67722252/unable-to-authenticate-using-flutter-local-auth-plugin
+- https://stackoverflow.com/questions/73713418/is-it-not-valid-now-the-authenticatewithbiometrics-in-local-auth-plugin
+- https://stackoverflow.com/questions/67121556/flutter-local-auth-required-security-features-not-enabled
+- https://stackoverflow.com/questions/68220888/i-flutter-805-platformexceptionno-fragment-activity-local-auth-plugin-requ
+- https://stackoverflow.com/questions/74282427/local-auth-useerrordialogs-is-not-working-for-second-time
+- https://stackoverflow.com/questions/62210423/flutter-local-auth-doesnt-work-on-android-28
+- https://stackoverflow.com/questions/66499220/local-authentication-problem-in-release-apk-flutter
+- https://stackoverflow.com/questions/59441558/flutter-local-auth-0-6-1-platformexceptionerror-you-need-to-use-a-theme
+- https://stackoverflow.com/questions/64045554/flutter-local-auth-issues-on-android-certain-devices
+- https://stackoverflow.com/questions/69970290/flutter-local-auth-can-be-bypassed-by-pressing-the-back-button
 
 ## 3. Video Structure
 

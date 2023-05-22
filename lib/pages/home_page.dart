@@ -4,8 +4,6 @@ import 'package:local_auth_package_flutter/local_auth_api.dart';
 
 import 'authenticated_page.dart';
 
-final auth = LocalAuthentication();
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key, required this.title});
 
@@ -24,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
-          // backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Center(
           child: Column(
@@ -87,7 +85,8 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const AuthenticatedPage()),
+                        builder: (context) => const AuthenticatedPage(),
+                      ),
                     );
                   }
                 },

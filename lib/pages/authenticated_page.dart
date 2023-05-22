@@ -6,7 +6,10 @@ class AuthenticatedPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New Page')),
+      appBar: AppBar(
+        title: const Text('Authentication Successful'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      ),
       body: const Center(
         child: Text('Authentication Successful'),
       ),
