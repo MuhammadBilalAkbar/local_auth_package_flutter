@@ -118,9 +118,16 @@
 
 **The Structured Main Content**
 
-1. _[Add here the main topics the video project is covering in chronological order. For each topic add the main points how this lesson can be taught step by step to beginners who never did anything related to what this lesson is about]_
-2. _[e.g. for this video project: https://www.youtube.com/watch?v=MSv38jO4EJk]_
-    - _[1. Setup Android & iOS]_
+1. Run `dart pub add local_auth` in terminal to add local_auth package in your project's
+   pubspec.yaml file.
+2. For this package keep in mind
+    - Steps for Android integration
+      are [here](https://pub.dev/packages/local_auth#android-integration).
+
+   Also check the compatibility mode of different android
+   versions [here](https://pub.dev/packages/local_auth#compatibility).
+
+    - Steps for iOS integration are [here](https://pub.dev/packages/local_auth#ios-integration).
         - _[Add for each topic more detailed steps ...]_
         - _[...]_
     - _[2. Pick Image From Gallery]_
