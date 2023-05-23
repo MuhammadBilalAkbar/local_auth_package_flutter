@@ -94,6 +94,8 @@
 - https://stackoverflow.com/questions/67121556/flutter-local-auth-required-security-features-not-enabled
 - https://stackoverflow.com/questions/68220888/i-flutter-805-platformexceptionno-fragment-activity-local-auth-plugin-requ
 - https://stackoverflow.com/questions/74282427/local-auth-useerrordialogs-is-not-working-for-second-time
+- https://stackoverflow.com/questions/72989480/authenticate-with-biometrics-not-defined-flutter
+- https://stackoverflow.com/questions/75206089/local-auth-ios-flutter
 - https://stackoverflow.com/questions/62210423/flutter-local-auth-doesnt-work-on-android-28
 - https://stackoverflow.com/questions/66499220/local-authentication-problem-in-release-apk-flutter
 - https://stackoverflow.com/questions/59441558/flutter-local-auth-0-6-1-platformexceptionerror-you-need-to-use-a-theme
@@ -120,7 +122,11 @@
 
 1. Run `dart pub add local_auth` in terminal to add local_auth package in your project's
    pubspec.yaml file.
-2. For this package:
+2. Output of this project is following:
+
+   ![](LocalAuthPackageFlutterOutput.gif)
+
+3. For this package:
     - Steps for Android integration
       are [here](https://pub.dev/packages/local_auth#android-integration).
 
@@ -131,8 +137,235 @@
       Check compatibility of
       iOS [here](https://en.wikipedia.org/wiki/Touch_ID#:~:text=Apple%20retained%20Touch%20ID%20on,have%20adopted%20Face%20ID%20recognition)
       .
-        - _[Add for each topic more detailed steps ...]_
-        - _[...]_
-    - _[2. Pick Image From Gallery]_
-    - _[3. Pick Image From Camera]_
-    - _[4. Persist Images To Local Storage]_
+4. `my_app.dart` contains theming properties of app. It is being called by `runApp` in `main.dart`.
+   Its `home` property is calling HomePage from `home_page.dart`.
+5. `local_auth_api.dart` file contains `isDeviceSupported()`, `canCheckBiometrics()`
+   , `getBiometrics()`, and `authenticate()` methods in it.
+
+   All these methods are called in `home_page.dart` to perform their relevant functionalities.
+
+   Initialize `LocalAuthentication()` using local_auth package
+   import `static final auth = LocalAuthentication();`. Use this `auth` variable for all methods.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:local_auth/local_auth.dart';
+
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_ios/local_auth_ios.dart';
+
+class LocalAuthApi {
+  static final auth = LocalAuthentication();
+
+  static Future<bool> isDeviceSupported() async {
+    try {
+      return await auth.isDeviceSupported();
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
+      return false;
+    }
+  }
+
+  static Future<bool> canCheckBiometrics() async {
+    try {
+      return await auth.canCheckBiometrics;
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
+      return false;
+    }
+  }
+
+  Future<List<BiometricType>> getBiometrics() async {
+    try {
+      return await auth.getAvailableBiometrics();
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
+      return <BiometricType>[];
+    }
+  }
+
+  static Future<bool> authenticate() async {
+    final isAvailable = await isDeviceSupported() && await canCheckBiometrics();
+    if (!isAvailable) return false;
+    try {
+      return await auth.authenticate(
+        localizedReason: 'Scan fingerprint to authenticate',
+        authMessages: const [
+          AndroidAuthMessages(
+            signInTitle: 'Scan fingerprint to authenticate',
+            cancelButton: 'No thanks',
+            biometricSuccess: 'Success',
+          ),
+          IOSAuthMessages(
+            localizedFallbackTitle: 'Scan finger to authenticate',
+            cancelButton: 'No thanks',
+          ),
+        ],
+        options: const AuthenticationOptions(
+          useErrorDialogs: true,
+          stickyAuth: true,
+          biometricOnly: false,
+          sensitiveTransaction: true,
+        ),
+      );
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
+      return false;
+    }
+  }
+}
+
+```
+
+- All these methods are in try-catch block like:
+
+```dart 
+    try {
+  ...
+    } on PlatformException catch (error) {
+  ...
+    }
+```
+
+- `isDeviceSupported()` method checks if the device is supported or not
+  using `await auth.isDeviceSupported()`.
+
+  Returns true if device is capable of checking biometrics or is able to fail over to device
+  credentials.
+- `canCheckBiometrics()` method uses `await auth.canCheckBiometrics`.
+
+  It returns true if device is capable of checking biometrics
+- `getBiometrics()` method return List<BiometricType>
+  using `return await auth.getAvailableBiometrics()`.
+- `authenticate()` method is main method which is used for authentication in android and iOS.
+    - It returns Future<bool>.
+    - Following code is used to check whether the device is supported and can check available
+      biometrics.
+
+```dart 
+    final isAvailable = await isDeviceSupported() && await canCheckBiometrics();
+    if (!isAvailable) return false;
+```
+
+- If isAvailable is false. It will return false and will not authenticate.
+
+- Otherwise it will use `return await auth.authenticate()` to authenticates the user with biometrics
+  available on the device while also allowing the user to use device authentication - pin, pattern,
+  passcode.
+- Returns true if the user successfully authenticated, false otherwise.
+- `authenticate()` has three arguments:
+    - `localizedReason` accepts string. It is required and other parameters are
+      optional. `localizedReason` is the message to show to user while asking them for
+      authentication. This is typically along the lines of: '
+      Authenticate to access MyApp.'. This must not be empty.
+    - `authMessages` provide authMessages if you want to customize messages in the dialogs on
+      different platforms android, iOS and windows.
+
+      ![](AndroidAuthMessages.png)
+
+      ![](IOSAuthMessages.png)
+
+    - `options` accepts AuthenticationOptions() widget. AuthenticationOptions() widget has following
+      four arguments:
+        - `useErrorDialogs` show error dialogs encountered while authenticating.
+        - `stickyAuth` parameter allows you to control whether the authentication state remains
+          active even after the app is closed and reopened.
+            - If stickyAuth is set to true, the authentication state will persist, and the user will
+              not need to re-authenticate when reopening the app.
+            - If stickyAuth is set to false, the authentication state will not persist, and the user
+              will need to authenticate again after reopening the app.
+        - `sensitiveTransaction` used whether platform specific precautions are enabled. For
+          instance, on face unlock, Android opens a confirmation dialog after the face is recognized
+          to make sure the user meant to unlock their device.
+        - `biometricOnly` prevent authentications from using non-biometric local authentication such
+          as pin, passcode, or pattern.
+
+6`home_page.dart` contains two ElevatedButton with icons and two texts in a column.
+
+Initialize the following:
+
+```dart
+
+bool isDeviceSupported = false;
+bool canCheckBiometrics = false;
+List<BiometricType> availableBiometrics = [];
+```
+
+- First ElevatedButton.icon code:
+
+```dart 
+              ElevatedButton.icon(
+                icon: const Icon(Icons.event_available),
+                onPressed: () async {
+                  final isAvailable = await LocalAuthApi.isDeviceSupported();
+                  final canCheckBiometric =
+                      await LocalAuthApi.canCheckBiometrics();
+                  setState(() {
+                    isDeviceSupported = isAvailable;
+                    canCheckBiometrics = canCheckBiometric;
+                  });
+                  final biometrics = await LocalAuthApi().getBiometrics();
+                  debugPrint('biometrics: $biometrics');
+                  final hasStrong = biometrics.contains(BiometricType.strong);
+                  debugPrint('hasStrong: $hasStrong');
+                  final hasWeak = biometrics.contains(BiometricType.weak);
+                  debugPrint('hasWeak: $hasWeak');
+                  final hasFace = biometrics.contains(BiometricType.face);
+                  debugPrint('hasFace: $hasFace');
+                  final hasFingerprint =
+                      biometrics.contains(BiometricType.fingerprint);
+                  debugPrint('hasFingerprint: $hasFingerprint');
+                  final hasIris = biometrics.contains(BiometricType.iris);
+                  debugPrint('hasIris: $hasIris');
+
+                  if (!mounted) return;
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text('Availability'),
+                      content: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          listTile('Biometrics', isAvailable),
+                          listTile('Strong', hasStrong),
+                          listTile('Weak', hasWeak),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                label: const Text('Check Availability'),
+              ),
+```
+
+LocalAuthApi.isDeviceSupported() and LocalAuthApi.canCheckBiometrics() update the boolean variables
+isDeviceSupported and canCheckBiometrics using setState((){}) which are used in two text widget.
+
+- Second ElevatedButton.icon code:
+
+```dart 
+              ElevatedButton.icon(
+                icon: const Icon(Icons.lock_open),
+                onPressed: () async {
+                  final isAuthenticated = await LocalAuthApi.authenticate();
+                  if (isAuthenticated) {
+                    if (!mounted) return;
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AuthenticatedPage(),
+                      ),
+                    );
+                  }
+                },
+                label: const Text('Authenticate'),
+              ),
+```
+
+This button authenticates the user using `await LocalAuthApi.authenticate()`.
+
+If it return true then go to `AuthenticatePage` in `authenticated_page.dart`.
+
+If it return false then it shows error device is not supported.

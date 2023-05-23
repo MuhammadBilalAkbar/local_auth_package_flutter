@@ -11,8 +11,8 @@ class LocalAuthApi {
   static Future<bool> isDeviceSupported() async {
     try {
       return await auth.isDeviceSupported();
-    } on PlatformException catch (e) {
-      debugPrint(e.toString());
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
       return false;
     }
   }
@@ -20,8 +20,8 @@ class LocalAuthApi {
   static Future<bool> canCheckBiometrics() async {
     try {
       return await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      debugPrint(e.toString());
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
       return false;
     }
   }
@@ -29,8 +29,8 @@ class LocalAuthApi {
   Future<List<BiometricType>> getBiometrics() async {
     try {
       return await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      debugPrint(e.toString());
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
       return <BiometricType>[];
     }
   }
@@ -55,12 +55,12 @@ class LocalAuthApi {
         options: const AuthenticationOptions(
           useErrorDialogs: true,
           stickyAuth: true,
-          biometricOnly: false,
           sensitiveTransaction: true,
+          biometricOnly: true,
         ),
       );
-    } on PlatformException catch (e) {
-      debugPrint(e.toString());
+    } on PlatformException catch (error) {
+      debugPrint(error.toString());
       return false;
     }
   }
