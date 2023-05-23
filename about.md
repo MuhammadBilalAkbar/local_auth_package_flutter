@@ -112,7 +112,7 @@
     - Keep in mind that many android and iOS devices support only face id and some support
       fingerprint. For android visit [this](https://pub.dev/packages/local_auth#compatibility) and
       for iOS
-      visit [this](https://en.wikipedia.org/wiki/Touch_ID#:~:text=Apple%20retained%20Touch%20ID%20on,have%20adopted%20Face%20ID%20recognition.)
+      visit [this](https://en.wikipedia.org/wiki/Touch_ID#:~:text=Apple%20retained%20Touch%20ID%20on,have%20adopted%20Face%20ID%20recognition)
       .
 3. Its very useful for security, convenience, customizability and ease of use.
 
@@ -120,14 +120,17 @@
 
 1. Run `dart pub add local_auth` in terminal to add local_auth package in your project's
    pubspec.yaml file.
-2. For this package keep in mind
+2. For this package:
     - Steps for Android integration
       are [here](https://pub.dev/packages/local_auth#android-integration).
 
-   Also check the compatibility mode of different android
-   versions [here](https://pub.dev/packages/local_auth#compatibility).
+      Check compatibility of android [here](https://pub.dev/packages/local_auth#compatibility).
 
     - Steps for iOS integration are [here](https://pub.dev/packages/local_auth#ios-integration).
+
+      Check compatibility of
+      iOS [here](https://en.wikipedia.org/wiki/Touch_ID#:~:text=Apple%20retained%20Touch%20ID%20on,have%20adopted%20Face%20ID%20recognition)
+      .
         - _[Add for each topic more detailed steps ...]_
         - _[...]_
     - _[2. Pick Image From Gallery]_
